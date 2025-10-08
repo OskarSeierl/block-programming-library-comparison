@@ -1,0 +1,3 @@
+[submodule "public/libs/scratch-blocks"]
+	path = public/libs/scratch-blocks
+	url = https://github.com/LLK/scratch-blocks.git

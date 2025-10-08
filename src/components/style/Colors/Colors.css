@@ -1,0 +1,10 @@
+.colors__item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.colors__color {
+    width: 80px;
+    height: 70px;
+}

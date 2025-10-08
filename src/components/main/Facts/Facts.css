@@ -1,0 +1,8 @@
+.facts iframe {
+    height: -webkit-fill-available;
+    min-height: 400px;
+}
+
+.facts iframe, .facts img {
+    width: 100%;
+}

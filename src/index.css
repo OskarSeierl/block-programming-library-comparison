@@ -1,0 +1,14 @@
+.blockly-style {
+    width: 100%;
+    height: 98vh;
+    border: 1px solid #ccc;
+}
+
+.main-grid {
+    display: flex;
+}
+
+.main-grid > * {
+    flex: 1;
+    gap: 30px;
+}

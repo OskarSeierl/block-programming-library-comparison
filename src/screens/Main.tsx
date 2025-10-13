@@ -1,7 +1,11 @@
+import ScratchBlocksEditor from "../components/ScratchBlocksEditor/ScratchBlocksEditor";
+import BlocklyEditor from "../components/BocklyEditor/BlocklyEditor";
+
 const Main = () => {
     return (
-        <div>
-
+        <div className="main-grid">
+            <ScratchBlocksEditor />
+            <BlocklyEditor />
         </div>
     );
 };

@@ -4,7 +4,7 @@ import BlocklyEditor from "../components/BocklyEditor/BlocklyEditor";
 const Main = () => {
     return (
         <div className="main-grid">
-            <ScratchBlocksEditor />
+            <ScratchBlocksEditor onChange={() => console.log("hello")} />
             <BlocklyEditor />
         </div>
     );

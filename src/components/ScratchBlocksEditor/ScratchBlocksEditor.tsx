@@ -6,7 +6,11 @@ declare global {
     }
 }
 
-const ScratchBlocksEditor = () => {
+interface Props {
+    onChange: (workspace: any) => void;
+}
+
+const ScratchBlocksEditor = ({onChange}: Props) => {
     const blocklyDiv = useRef(null);
     const workspaceRef = useRef(null);
 
@@ -19,7 +23,7 @@ const ScratchBlocksEditor = () => {
             return;
         }
 
-        workspaceRef.current = Blockly.inject(blocklyDiv.current, {
+        const workspace = Blockly.inject(blocklyDiv.current, {
             toolbox: `<xml style="display: none">
               <category name="Motion" colour="#4C97FF" secondaryColour="#4280D7">
                 <block type="motion_movesteps"></block>
@@ -33,7 +37,21 @@ const ScratchBlocksEditor = () => {
             },
             media: "/libs/scratch-blocks/media/",
         });
-    }, []);
+
+        workspaceRef.current = workspace;
+
+        console.log("Workspace injected:", workspace);
+        console.log("Events enabled:", Blockly.Events.isEnabled());
+        console.log("Event system:", Blockly.Events);
+
+        workspace.addChangeListener((event: any) => {
+            console.log("blockly event:", event.type);
+            onChange(workspace);
+        });
+    }, [onChange]);
+
+
+
 
     return (
         <div

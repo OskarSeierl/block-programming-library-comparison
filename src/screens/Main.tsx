@@ -1,18 +1,18 @@
 import ScratchBlocksEditor from "../components/ScratchBlocksEditor/ScratchBlocksEditor";
-import BlocklyEditor from "../components/BocklyEditor/BlocklyEditor";
+import ScratchBlocks from "scratch-blocks";
 
 const Main = () => {
 
-    const handleScratchBlocksChange = (event: string, workspace: any) => {
+    const handleScratchBlocksChange = (event: string, workspace: ScratchBlocks.Workspace) => {
         if(event === "endDrag") {
-            alert("hi")
+            console.log(workspace);
         }
     };
 
     return (
         <div className="main-grid">
             <ScratchBlocksEditor onChange={handleScratchBlocksChange} />
-            <BlocklyEditor />
+            {/*<BlocklyEditor />*/}
         </div>
     );
 };

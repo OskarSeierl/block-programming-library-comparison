@@ -1,18 +1,12 @@
 import React, {useEffect, useRef} from "react";
 
-declare global {
-    interface Window {
-        Blockly?: any;
-    }
-}
-
 interface Props {
-    onChange: (event: string, workspace: any) => void;
+    onChange: (event: string, workspace: ScratchBlocks.Workspace) => void;
 }
 
 const ScratchBlocksEditor = ({onChange}: Props) => {
-    const blocklyDiv = useRef(null);
-    const workspaceRef = useRef(null);
+    const blocklyDiv = useRef<HTMLDivElement | null>(null);
+    const workspaceRef = useRef<ScratchBlocks.Workspace | null>(null);
 
     useEffect(() => {
         if (workspaceRef.current) return; // already initialized
@@ -23,7 +17,7 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
             return;
         }
 
-        const workspace = Blockly.inject(blocklyDiv.current, {
+        const workspace: ScratchBlocks.Workspace = Blockly.inject(blocklyDiv.current, {
             toolbox: `<xml style="display: none">
               <category name="Motion" colour="#4C97FF" secondaryColour="#4280D7">
                 <block type="motion_movesteps"></block>

@@ -5,6 +5,7 @@
   "author": "Oskar Seierl",
   "private": true,
   "dependencies": {
+    "@turbowarp/types": "^0.0.13",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.12.0",
     "@types/react": "^18.3.26",

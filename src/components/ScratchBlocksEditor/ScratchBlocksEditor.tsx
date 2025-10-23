@@ -20,8 +20,13 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
         const workspace: ScratchBlocks.Workspace = Blockly.inject(blocklyDiv.current, {
             toolbox: `<xml style="display: none">
               <category name="Motion" colour="#4C97FF" secondaryColour="#4280D7">
-                <block type="motion_movesteps"></block>
-                <block type="math_number"></block>
+                <block type="motion_movesteps">
+                    <value name="STEPS">
+                        <shadow type="math_number">
+                            <field name="NUM"></field>
+                        </shadow>
+                    </value>
+                </block>
               </category>
             </xml>`,
             trashcan: true,

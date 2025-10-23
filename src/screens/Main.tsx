@@ -5,7 +5,9 @@ const Main = () => {
 
     const handleScratchBlocksChange = (event: string, workspace: ScratchBlocks.Workspace) => {
         if(event === "endDrag") {
-            console.log(workspace);
+            //console.log(workspace);
+            console.log(workspace.getAllBlocks());
+            console.log(workspace.getTopBlocks());
         }
     };
 

@@ -7,7 +7,7 @@ declare global {
 }
 
 interface Props {
-    onChange: (workspace: any) => void;
+    onChange: (event: string, workspace: any) => void;
 }
 
 const ScratchBlocksEditor = ({onChange}: Props) => {
@@ -46,7 +46,7 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
 
         workspace.addChangeListener((event: any) => {
             console.log("blockly event:", event.type);
-            onChange(workspace);
+            onChange(event.type, workspace);
         });
     }, [onChange]);
 

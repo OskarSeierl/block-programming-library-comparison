@@ -5,7 +5,7 @@ export default class Robot {
         this.name = name;
     }
 
-    print(): void {
-        console.log(`Robot: ${this.name}`);
+    print(something: string="Hello"): void {
+        console.log(`Robot (${this.name}): ${something}`);
     }
 }

@@ -27,6 +27,19 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
                         </shadow>
                     </value>
                 </block>
+                <block type="control_repeat">
+                    <value name="TIMES">
+                        <shadow type="math_number">
+                            <field name="NUM">10</field>
+                        </shadow>
+                    </value>
+                    <statement name="SUBSTACK">
+                    <!-- nested blocks go here -->
+                    </statement>
+                </block>
+                <block type="control_if">
+                
+                </block>
               </category>
             </xml>`,
             trashcan: true,
@@ -39,12 +52,7 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
 
         workspaceRef.current = workspace;
 
-        console.log("Workspace injected:", workspace);
-        console.log("Events enabled:", Blockly.Events.isEnabled());
-        console.log("Event system:", Blockly.Events);
-
         workspace.addChangeListener((event: any) => {
-            console.log("blockly event:", event.type);
             onChange(event.type, workspace);
         });
     }, [onChange]);

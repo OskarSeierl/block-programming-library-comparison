@@ -9,7 +9,9 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const definitions: BlockDefinitions = {
     "motion_movesteps": async (block, robot) => {
-        robot.print(`Moving steps`);
+        const stepsBlock = block.getInputTargetBlock("STEPS");
+        const steps = stepsBlock ? parseInt(stepsBlock.getFieldValue("NUM"), 10) || 0 : 0;
+        robot.print(`Moving ${steps} steps`);
     },
     "control_repeat": async (block, robot) => {
         let times = 0;

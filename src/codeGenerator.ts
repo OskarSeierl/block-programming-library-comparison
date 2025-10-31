@@ -36,7 +36,7 @@ const executeBlock = async (block: ScratchBlocks.Block, robot: Robot) => {
 
 const traverseAndExecuteBlock = async (block: ScratchBlocks.Block, robot: Robot) => {
     block.workspace.glowBlock(block.id, true);
-    executeBlock(block, robot);
+    await executeBlock(block, robot);
     await sleep(500); // glow duration
     block.workspace.glowBlock(block.id, false);
 

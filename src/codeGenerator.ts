@@ -40,12 +40,6 @@ const traverseAndExecuteBlock = async (block: ScratchBlocks.Block, robot: Robot)
     await sleep(500); // glow duration
     block.workspace.glowBlock(block.id, false);
 
-    // Handle substack(s) TODO: needed?
-    const substack = block.getInputTargetBlock("SUBSTACK");
-    if (substack) await traverseAndExecuteBlock(substack, robot);
-    const substack2 = block.getInputTargetBlock("SUBSTACK2");
-    if (substack2) await traverseAndExecuteBlock(substack2, robot);
-
     // Move to next block
     const next = block.getNextBlock();
     if (next) await traverseAndExecuteBlock(next, robot);

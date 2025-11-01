@@ -40,6 +40,9 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
                 <block type="control_if">
                 
                 </block>
+                <block type="operator_not"></block>
+                <block type="operator_and"></block>
+                <block type="operator_or"></block>
               </category>
             </xml>`,
             trashcan: true,

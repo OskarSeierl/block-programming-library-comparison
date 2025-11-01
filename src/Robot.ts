@@ -8,4 +8,8 @@ export default class Robot {
     print(something: string="Hello"): void {
         console.log(`Robot (${this.name}): ${something}`);
     }
+
+    wallInFront(): boolean {
+        return true;
+    }
 }

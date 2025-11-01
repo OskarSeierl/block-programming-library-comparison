@@ -1,4 +1,5 @@
 import React, {useEffect, useRef} from "react";
+import {setWorkspace} from "../../blocklyStore";
 
 interface Props {
     onChange: (event: string, workspace: ScratchBlocks.Workspace) => void;
@@ -16,6 +17,19 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
             console.error("Blockly not loaded");
             return;
         }
+
+        Blockly.Blocks['custom_touchingobjectmenu'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField(new Blockly.FieldDropdown([
+                        ['Tree', 'TREE'],
+                        ['House', 'HOUSE'],
+                        ['Car', 'CAR']
+                    ]), 'CUSTOMMENU');
+                this.setOutput(true, 'String');
+                this.setColour(230);
+            }
+        };
 
         const workspace: ScratchBlocks.Workspace = Blockly.inject(blocklyDiv.current, {
             toolbox: `<xml style="display: none">
@@ -37,12 +51,17 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
                     <!-- nested blocks go here -->
                     </statement>
                 </block>
-                <block type="control_if">
-                
-                </block>
+                <block type="control_forever"></block>
+                <block type="control_repeat_until" id="control_repeat_until"></block>
+                <block type="control_if"></block>
                 <block type="operator_not"></block>
                 <block type="operator_and"></block>
                 <block type="operator_or"></block>
+                <block type="sensing_touchingobject">
+                    <value name="TOUCHINGOBJECTMENU">
+                        <shadow type="custom_touchingobjectmenu"></shadow>
+                    </value>
+                </block>
               </category>
             </xml>`,
             trashcan: true,
@@ -53,6 +72,7 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
             media: "/libs/scratch-blocks/media/",
         });
 
+        setWorkspace(workspace);
         workspaceRef.current = workspace;
 
         workspace.addChangeListener((event: any) => {

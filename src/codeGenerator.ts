@@ -6,27 +6,51 @@ type BlockDefinitions<R = void> = {
     [key: string]: (block: ScratchBlocks.Block, robot: Robot) => R
 };
 
-const GLOW_DURATION_MS = 1500;
+const GLOW_DURATION_MS = 1000;
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const definitions: BlockDefinitions = {
     "motion_movesteps": async (block, robot) => {
         const stepsBlock = block.getInputTargetBlock("STEPS");
-        const steps = stepsBlock ? parseInt(stepsBlock.getFieldValue("NUM"), 10) || 0 : 0;
+        if(!stepsBlock) {
+            throw new ExecutionError("Missing 'steps' input for 'move steps' block", block);
+        }
+        const steps = parseInt(stepsBlock.getFieldValue("NUM"), 10) || 0;
         robot.print(`Moving ${steps} steps`);
     },
     "control_repeat": async (block, robot) => {
-        let times = 0;
         const timesBlock = block.getInputTargetBlock("TIMES");
-        if (timesBlock) {
-            const fieldVal = timesBlock.getFieldValue("NUM");
-            times = parseInt(fieldVal, 10) || 0;
+        if(!timesBlock) {
+            throw new ExecutionError("Missing 'times' input for 'repeat' block", block);
         }
+        const fieldVal = timesBlock.getFieldValue("NUM");
+        const times = parseInt(fieldVal, 10) || 0;
         const substack = block.getInputTargetBlock("SUBSTACK");
-
         for (let i = 0; i < times; i++) {
             if (substack) await traverseAndExecuteBlock(substack, robot);
+        }
+    },
+    "control_repeat_until": async (block, robot) => {
+        const conditionBlock = block.getInputTargetBlock("CONDITION");
+        if(!conditionBlock) {
+            throw new ExecutionError("Missing condition for 'repeat until' block", block);
+        }
+        const substack = block.getInputTargetBlock("SUBSTACK");
+        if(substack) {
+            while (true) {
+                const conditionValue = Boolean(await executeAndGlow(conditionBlock, robot));
+                if (conditionValue) break;
+                await traverseAndExecuteBlock(substack, robot);
+            }
+        }
+    },
+    "control_forever": async (block, robot) => {
+        const substack = block.getInputTargetBlock("SUBSTACK");
+        if (substack) {
+            while (true) {
+                await traverseAndExecuteBlock(substack, robot);
+            }
         }
     },
     "control_if": async (block, robot) => {
@@ -70,7 +94,12 @@ const definitions: BlockDefinitions = {
 
 const executeBlock = async (block: ScratchBlocks.Block, robot: Robot) => {
     if(definitions[block.type]) {
-        return await definitions[block.type](block, robot);
+        try {
+            return await definitions[block.type](block, robot);
+        } catch (error) {
+            // TODO: change to real error handling
+            alert("Error during execution: " + error);
+        }
     } else {
         console.warn(`No definition for block type: ${block.type}`);
     }
@@ -97,12 +126,7 @@ export const executeCode = (workspace: ScratchBlocks.Workspace, robot: Robot) =>
 
     console.log("Top level blocks count:", blocks.length);
 
-    try {
-        for(let block of blocks) {
-            traverseAndExecuteBlock(block, robot);
-        }
-    } catch (error) {
-        // TODO: change to real error handling
-        alert("Error during execution: " + error);
+    for(let block of blocks) {
+        traverseAndExecuteBlock(block, robot);
     }
 };

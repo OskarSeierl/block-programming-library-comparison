@@ -1,6 +1,7 @@
 import Robot from "./Robot";
 import ScratchBlocks from "scratch-blocks";
 import {ExecutionError} from "./ExecutionError";
+import {FieldType} from "./components/ScratchBlocksEditor/ScratchBlocksEditor";
 
 type BlockDefinitions<R = void> = {
     [key: string]: (block: ScratchBlocks.Block, robot: Robot) => R
@@ -17,8 +18,25 @@ const definitions: BlockDefinitions = {
             throw new ExecutionError("Missing 'steps' input for 'move steps' block", block);
         }
         const steps = parseInt(stepsBlock.getFieldValue("NUM"), 10) || 0;
+        robot.go(steps);
         robot.print(`Moving ${steps} steps`);
     },
+    // sending
+    "sensing_touchingobject": async (block, robot) => {
+        const objectBlock = block.getInputTargetBlock("TOUCHINGOBJECTMENU");
+        if (!objectBlock) {
+            throw new ExecutionError("Missing object input for 'touching object' block", block);
+        }
+
+        const objectName = objectBlock.getFieldValue("CUSTOMMENU");
+
+        if (objectName === FieldType.WALL) {
+            return robot.wallInFront();
+        }
+
+        return false;
+    },
+    // control structures
     "control_repeat": async (block, robot) => {
         const timesBlock = block.getInputTargetBlock("TIMES");
         if(!timesBlock) {

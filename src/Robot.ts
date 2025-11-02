@@ -1,8 +1,10 @@
 export default class Robot {
     name: string;
+    stepCounter: number;
 
     constructor(name: string) {
         this.name = name;
+        this.stepCounter = 0;
     }
 
     print(something: string="Hello"): void {
@@ -10,6 +12,10 @@ export default class Robot {
     }
 
     wallInFront(): boolean {
-        return true;
+        return this.stepCounter >= 3;
+    }
+
+    go(steps: number): void {
+        this.stepCounter += steps;
     }
 }

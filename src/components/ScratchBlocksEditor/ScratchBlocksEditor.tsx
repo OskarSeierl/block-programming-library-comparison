@@ -75,6 +75,18 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
         Blockly.Xml.domToWorkspace(xmlDomRestored, newWorkspace);
     }
 
+    const fixCurrentBlocks = () => {
+        const Blockly = window.Blockly;
+        const workspace: ScratchBlocks.Workspace = Blockly.getMainWorkspace();
+        const allBlocks = workspace.getAllBlocks();
+        allBlocks.forEach(block => {
+            block.setMovable(false);
+            block.setDeletable(false);
+            block.setEditable(false);
+        });
+
+    }
+
     useEffect(() => {
         if (workspaceRef.current) return; // already initialized
 
@@ -113,6 +125,7 @@ const ScratchBlocksEditor = ({onChange}: Props) => {
                 style={{ flex: 1, height: "90vh", width: "100%", border: "1px solid #ccc" }}
             />
             <button onClick={() => switchWorkspaceLanguage()}>Toggle Language</button>
+            <button onClick={fixCurrentBlocks}>Fix current blocks</button>
         </div>
     );
 };

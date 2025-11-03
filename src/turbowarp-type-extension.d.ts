@@ -10,6 +10,9 @@ declare module "scratch-blocks" {
         getInput(name: string): any;
         getInputTargetBlock(name: string): any;
         getNextBlock(): Block | null;
+        setMovable(movable: boolean): void;
+        setEditable(editable: boolean): void;
+        setDeletable(deletable: boolean): void;
     }
 
     export interface Workspace {

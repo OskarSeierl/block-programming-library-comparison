@@ -63,14 +63,6 @@ const definitions: BlockDefinitions = {
             }
         }
     },
-    "control_forever": async (block, robot) => {
-        const substack = block.getInputTargetBlock("SUBSTACK");
-        if (substack) {
-            while (true) {
-                await traverseAndExecuteBlock(substack, robot);
-            }
-        }
-    },
     "control_if": async (block, robot) => {
         const conditionBlock = block.getInputTargetBlock("CONDITION");
         if(!conditionBlock) {

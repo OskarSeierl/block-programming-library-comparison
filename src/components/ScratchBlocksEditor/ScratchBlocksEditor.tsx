@@ -29,7 +29,6 @@ const WORKSPACE_DEFINITION = {
                     <!-- nested blocks go here -->
                     </statement>
                 </block>
-                <block type="control_forever"></block>
                 <block type="control_repeat_until" id="control_repeat_until"></block>
                 <block type="control_if"></block>
                 <block type="operator_not"></block>
